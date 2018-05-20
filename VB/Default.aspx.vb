@@ -1,4 +1,6 @@
-﻿Imports System
+﻿Option Infer On
+
+Imports System
 Imports System.Collections.Generic
 Imports System.Collections.Specialized
 Imports System.ComponentModel
@@ -12,8 +14,15 @@ Partial Public Class _Default
     Protected ReadOnly Property GridData() As List(Of GridDataItem)
         Get
             Dim key = "34FAA431-CF79-4869-9488-93F6AAE81263"
-            If (Not IsPostBack) OrElse Session(key) Is Nothing Then
-                Session(key) = Enumerable.Range(0, 100).Select(Function(i) New GridDataItem With {.ID = i, .C1 = i Mod 2, .C2 = i * 0.5 Mod 3, .C3 = "C3 " & i, .C4 = i Mod 2 = 0, .C5 = New Date(2013 + i, 12, 16)}).ToList()
+            If Not IsPostBack OrElse Session(key) Is Nothing Then
+                Session(key) = Enumerable.Range(0, 100).Select(Function(i) New GridDataItem With { _
+                    .ID = i, _
+                    .C1 = i Mod 2, _
+                    .C2 = i * 0.5 Mod 3, _
+                    .C3 = "C3 " & i, _
+                    .C4 = i Mod 2 = 0, _
+                    .C5 = New Date(2013 + i, 12, 16) _
+                }).ToList()
             End If
             Return DirectCast(Session(key), List(Of GridDataItem))
         End Get
